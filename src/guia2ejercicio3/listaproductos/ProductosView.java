@@ -97,7 +97,7 @@ public class ProductosView extends javax.swing.JFrame {
                         .addComponent(jcProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jbAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -109,8 +109,8 @@ public class ProductosView extends javax.swing.JFrame {
                     .addComponent(jcProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jbAgregar))
                 .addGap(44, 44, 44)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pack();
@@ -118,15 +118,31 @@ public class ProductosView extends javax.swing.JFrame {
 
     private void jbAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbAgregarActionPerformed
         // TODO add your handling code here:
+        double precio = 0;
+        String precioT;
 
         String nombre = JOptionPane.showInputDialog("Ingrese el nombre del producto");
-        double precio = Double.parseDouble(JOptionPane.showInputDialog("Ingrese el precio del producto"));
+        if (nombre == null) {
+            return;
+        }
 
-        String categoria =  jcProductos.getSelectedItem().toString();
+        while (true) {
+            precioT = JOptionPane.showInputDialog("Ingrese el precio del producto");
+            if (precioT == null) {
+                return;
+            }
+            try {
+                precio = Double.parseDouble(precioT);
+                break;
+            } catch (NumberFormatException err) {
+                JOptionPane.showMessageDialog(this, "Debe ingresar numeros");
+            }
+        }
+
+        String categoria = jcProductos.getSelectedItem().toString();
 
         Productos prod = new Productos(categoria, nombre, precio);
         modelo.addRow(new Object[]{prod.getCategoria(), prod.getNombre(), prod.getPrecio()});
-
 
     }//GEN-LAST:event_jbAgregarActionPerformed
 
@@ -186,9 +202,9 @@ public class ProductosView extends javax.swing.JFrame {
         jcProductos.addItem("Limpieza");
         jcProductos.addItem("Tecno");
 
-       jtProductos.setModel(modelo);
-        
+        jtProductos.setModel(modelo);
+
         jcProductos.setModel(new DefaultComboBoxModel(new String[]{"Comestible", "Limpieza", "Tecno"}));    // para eliminar item 1, item 2, etc.
     }
-    
+
 } // Llave clase
